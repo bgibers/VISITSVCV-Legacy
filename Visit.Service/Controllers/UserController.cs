@@ -33,13 +33,20 @@ namespace visitsvc.Controllers
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.User.FindAsync(id);
-
+            
             if (user == null)
             {
                 return NotFound();
             }
 
             return user;
+        }
+
+
+        [HttpGet("tst")]
+        public async Task<ActionResult<User>> Test()
+        {
+            return await _context.User.FirstAsync(u => u.Uname == "test");
         }
 
         // PUT: api/User/5

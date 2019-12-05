@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using visitsvc.BusinessLogic;
 using visitsvc.DataAccess;
 using visitsvc.Models;
 
@@ -27,6 +28,8 @@ namespace visitsvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddTransient<ICountryBusinessLogic,CountryBusinessLogic>();
             
             services.AddDbContext<visitContext>( 
                 options => options.UseMySql("Server=localhost; " +

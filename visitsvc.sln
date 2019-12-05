@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "visitsvc", "visitsvc\visitsvc.csproj", "{2866271C-62F2-4EFD-B483-FC1C0D4AA9BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visit.Service", "Visit.Service\Visit.Service.csproj", "{2866271C-62F2-4EFD-B483-FC1C0D4AA9BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

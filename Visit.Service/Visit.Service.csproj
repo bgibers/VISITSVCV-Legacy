@@ -2,10 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>visitsvc</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="BusinessLogic" />
       <Folder Include="Models" />
     </ItemGroup>
     <ItemGroup>
