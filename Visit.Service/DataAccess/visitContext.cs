@@ -1,10 +1,11 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using visitsvc.Models;
 
 namespace visitsvc.DataAccess
 {
-    public partial class visitContext : DbContext
+    public partial class visitContext : IdentityDbContext<User>
     {
         public visitContext()
         {
@@ -30,6 +31,8 @@ namespace visitsvc.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.Property(e => e.LocationId)
@@ -55,9 +58,6 @@ namespace visitsvc.DataAccess
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userId")
-                    .HasColumnType("int(12)");
 
                 entity.Property(e => e.Avi)
                     .HasColumnName("avi")
@@ -88,20 +88,6 @@ namespace visitsvc.DataAccess
                 entity.Property(e => e.LName)
                     .IsRequired()
                     .HasColumnName("lName")
-                    .HasColumnType("varchar(50)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
-
-                entity.Property(e => e.PwordHash)
-                    .IsRequired()
-                    .HasColumnName("pwordHash")
-                    .HasColumnType("varchar(50)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
-
-                entity.Property(e => e.PwordSalt)
-                    .IsRequired()
-                    .HasColumnName("pwordSalt")
                     .HasColumnType("varchar(50)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
@@ -139,8 +125,10 @@ namespace visitsvc.DataAccess
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("userId")
-                    .HasColumnType("int(12)");
-
+                    .HasColumnType("varchar(255)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+                
                 entity.Property(e => e.Visited)
                     .HasColumnName("visited")
                     .HasColumnType("bit(1)");

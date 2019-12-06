@@ -12,7 +12,7 @@ namespace visitsvc.BusinessLogic
         Task<ActionResult<Location>> GetLocationById(string locationId);
         Task<ActionResult<Location>> GetLocationByName(string locationName);
         IQueryable<UserLocation> GetAllLocationsByUsername(string username);
-        IQueryable<UserLocation> GetAllLocationsByUserId(int userId);
+        IQueryable<UserLocation> GetAllLocationsByUserId(string userId);
         bool LocationExistsByName(string location);
 
     }

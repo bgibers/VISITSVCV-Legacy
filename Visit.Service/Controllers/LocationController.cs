@@ -72,7 +72,7 @@ namespace visitsvc.Controllers
         /// Get locations by UserId
         /// </summary>
         [HttpGet("User/{id}")]
-        public async Task<IEnumerable<UserLocation>> GetLocationsByUserId(int id)
+        public async Task<IEnumerable<UserLocation>> GetLocationsByUserId(string id)
         {
             var result = await _LocationBusinessLogic.GetAllLocationsByUserId(id).ToListAsync();
 

@@ -6,7 +6,7 @@ namespace visitsvc.Models
     public partial class UserLocation
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string LocationId { get; set; }
         public ulong ToVisit { get; set; }
         public ulong Visited { get; set; }

@@ -66,9 +66,9 @@ namespace visitsvc.BusinessLogic
             return locations;
         }
 
-        public IQueryable<UserLocation> GetAllLocationsByUserId(int userId)
+        public IQueryable<UserLocation> GetAllLocationsByUserId(string userId)
         {
-            var locations =  _context.UserLocation.Where(l => l.User.UserId == userId);
+            var locations =  _context.UserLocation.Where(l => l.User.Id == userId);
 
             return locations;
         }
