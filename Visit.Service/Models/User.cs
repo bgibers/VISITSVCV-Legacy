@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace visitsvc.Models
 {
-    public partial class User
+    public sealed partial class User
     {
         public User()
         {
-            UserCountry = new HashSet<UserCountry>();
+            UserLocation = new HashSet<UserLocation>();
         }
 
         public int UserId { get; set; }
@@ -21,6 +21,6 @@ namespace visitsvc.Models
         public byte[] Avi { get; set; }
         public ulong? FacebookId { get; set; }
 
-        public virtual ICollection<UserCountry> UserCountry { get; set; }
+        public ICollection<UserLocation> UserLocation { get; set; }
     }
 }

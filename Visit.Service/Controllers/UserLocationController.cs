@@ -10,50 +10,50 @@ using visitsvc.Models;
 
 namespace visitsvc.Controllers
 {
-    [Route("api/UserCountry")]
+    [Route("api/UserLocation")]
     [ApiController]
-    public class UserCountryController : ControllerBase
+    public class UserLocationController : ControllerBase
     {
         private readonly visitContext _context;
 
-        public UserCountryController(visitContext context)
+        public UserLocationController(visitContext context)
         {
             _context = context;
         }
 
-        // GET: api/UserCountry
+        // GET: api/UserLocation
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserCountry>>> GetUserCountry()
+        public async Task<ActionResult<IEnumerable<UserLocation>>> GetUserLocation()
         {
-            return await _context.UserCountry.ToListAsync();
+            return await _context.UserLocation.ToListAsync();
         }
 
-        // GET: api/UserCountry/5
+        // GET: api/UserLocation/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserCountry>> GetUserCountry(int id)
+        public async Task<ActionResult<UserLocation>> GetUserLocation(int id)
         {
-            var userCountry = await _context.UserCountry.FindAsync(id);
+            var userLocation = await _context.UserLocation.FindAsync(id);
 
-            if (userCountry == null)
+            if (userLocation == null)
             {
                 return NotFound();
             }
 
-            return userCountry;
+            return userLocation;
         }
 
-        // PUT: api/UserCountry/5
+        // PUT: api/UserLocation/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserCountry(int id, UserCountry userCountry)
+        public async Task<IActionResult> PutUserLocation(int id, UserLocation userLocation)
         {
-            if (id != userCountry.Id)
+            if (id != userLocation.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userCountry).State = EntityState.Modified;
+            _context.Entry(userLocation).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace visitsvc.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserCountryExists(id))
+                if (!UserLocationExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace visitsvc.Controllers
             return NoContent();
         }
 
-        // POST: api/UserCountry
+        // POST: api/UserLocation
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<UserCountry>> PostUserCountry(UserCountry userCountry)
+        public async Task<ActionResult<UserLocation>> PostUserLocation(UserLocation userLocation)
         {
-            _context.UserCountry.Add(userCountry);
+            _context.UserLocation.Add(userLocation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserCountry", new { id = userCountry.Id }, userCountry);
+            return CreatedAtAction("GetUserLocation", new { id = userLocation.Id }, userLocation);
         }
 
-        // DELETE: api/UserCountry/5
+        // DELETE: api/UserLocation/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserCountry>> DeleteUserCountry(int id)
+        public async Task<ActionResult<UserLocation>> DeleteUserLocation(int id)
         {
-            var userCountry = await _context.UserCountry.FindAsync(id);
-            if (userCountry == null)
+            var userLocation = await _context.UserLocation.FindAsync(id);
+            if (userLocation == null)
             {
                 return NotFound();
             }
 
-            _context.UserCountry.Remove(userCountry);
+            _context.UserLocation.Remove(userLocation);
             await _context.SaveChangesAsync();
 
-            return userCountry;
+            return userLocation;
         }
 
-        private bool UserCountryExists(int id)
+        private bool UserLocationExists(int id)
         {
-            return _context.UserCountry.Any(e => e.Id == id);
+            return _context.UserLocation.Any(e => e.Id == id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using visitsvc.Models;
 
 namespace visitsvc.DataAccess
@@ -14,10 +15,10 @@ namespace visitsvc.DataAccess
         {
         }
 
-        public virtual DbSet<Country> Country { get; set; }
+        public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserCountry> UserCountry { get; set; }
-
+        public virtual DbSet<UserLocation> UserLocation { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -29,10 +30,10 @@ namespace visitsvc.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Country>(entity =>
+            modelBuilder.Entity<Location>(entity =>
             {
-                entity.Property(e => e.CountryId)
-                    .HasColumnName("countryId")
+                entity.Property(e => e.LocationId)
+                    .HasColumnName("LocationId")
                     .HasColumnType("varchar(6)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
@@ -106,10 +107,10 @@ namespace visitsvc.DataAccess
                     .HasCollation("utf8mb4_0900_ai_ci");
             });
 
-            modelBuilder.Entity<UserCountry>(entity =>
+            modelBuilder.Entity<UserLocation>(entity =>
             {
-                entity.HasIndex(e => e.CountryId)
-                    .HasName("countryId");
+                entity.HasIndex(e => e.LocationId)
+                    .HasName("LocationId");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("userId");
@@ -118,9 +119,9 @@ namespace visitsvc.DataAccess
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.CountryId)
+                entity.Property(e => e.LocationId)
                     .IsRequired()
-                    .HasColumnName("countryId")
+                    .HasColumnName("LocationId")
                     .HasColumnType("varchar(6)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
@@ -144,17 +145,17 @@ namespace visitsvc.DataAccess
                     .HasColumnName("visited")
                     .HasColumnType("bit(1)");
 
-                entity.HasOne(d => d.Country)
-                    .WithMany(p => p.UserCountry)
-                    .HasForeignKey(d => d.CountryId)
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.UserLocation)
+                    .HasForeignKey(d => d.LocationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("UserCountry_ibfk_2");
+                    .HasConstraintName("UserLocation_ibfk_2");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserCountry)
+                    .WithMany(p => p.UserLocation)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("UserCountry_ibfk_1");
+                    .HasConstraintName("UserLocation_ibfk_1");
             });
 
             OnModelCreatingPartial(modelBuilder);

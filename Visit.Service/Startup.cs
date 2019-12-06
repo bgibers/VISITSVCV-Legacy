@@ -29,7 +29,7 @@ namespace visitsvc
         {
             services.AddControllers();
 
-            services.AddTransient<ICountryBusinessLogic,CountryBusinessLogic>();
+            services.AddTransient<ILocationBusinessLogic,LocationBusinessLogic>();
             
             services.AddDbContext<visitContext>( 
                 options => options.UseMySql("Server=localhost; " +
@@ -41,7 +41,7 @@ namespace visitsvc
                     {
                         mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql); // replace with your Server Version and Type
                     }
-                ));
+                ).EnableSensitiveDataLogging());
             
             services.AddSwaggerDocument();
             services.AddSwaggerGen(c =>
