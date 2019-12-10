@@ -5,13 +5,13 @@ using visitsvc.Models;
 
 namespace visitsvc.DataAccess
 {
-    public partial class visitContext : IdentityDbContext<User>
+    public partial class VisitContext : IdentityDbContext<User>
     {
-        public visitContext()
+        public VisitContext()
         {
         }
 
-        public visitContext(DbContextOptions<visitContext> options)
+        public VisitContext(DbContextOptions<VisitContext> options)
             : base(options)
         {
         }
@@ -51,7 +51,7 @@ namespace visitsvc.DataAccess
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasColumnType("varchar(30)")
+                    .HasColumnType("varchar(50)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
             });

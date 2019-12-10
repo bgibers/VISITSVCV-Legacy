@@ -12,9 +12,9 @@ namespace visitsvc.BusinessLogic
 {
     public class LocationBusinessLogic : ILocationBusinessLogic
     {
-        private readonly visitContext _context;
+        private readonly VisitContext _context;
 
-        public LocationBusinessLogic(visitContext context)
+        public LocationBusinessLogic(VisitContext context)
         {
             this._context = context;
         }
@@ -61,7 +61,7 @@ namespace visitsvc.BusinessLogic
 
         public IQueryable<UserLocation> GetAllLocationsByUsername(string username)
         {
-            var locations =  _context.UserLocation.Where(l => l.User.Uname == username);
+            var locations =  _context.UserLocation.Where(l => l.User.UserName == username);
 
             return locations;
         }

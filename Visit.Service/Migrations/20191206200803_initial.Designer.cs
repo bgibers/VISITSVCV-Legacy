@@ -8,7 +8,7 @@ using visitsvc.DataAccess;
 
 namespace visitsvc.Migrations
 {
-    [DbContext(typeof(visitContext))]
+    [DbContext(typeof(VisitContext))]
     [Migration("20191206200803_initial")]
     partial class initial
     {
