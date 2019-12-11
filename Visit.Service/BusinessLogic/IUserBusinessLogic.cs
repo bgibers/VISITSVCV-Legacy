@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using visitsvc.Models;
@@ -9,6 +10,7 @@ namespace visitsvc.BusinessLogic
     {
         Task<IActionResult> RegisterUser(RegistrationUserApi user);
         Task<string> LoginUser(CredentialsViewModel credentials);
+        Task<User> GetCurrentUser(Claim user);
         Task<IEnumerable<User>> GetAllUsers();
 
     }

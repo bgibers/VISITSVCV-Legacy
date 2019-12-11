@@ -81,9 +81,9 @@ namespace visitsvc.BusinessLogic
             throw new System.NotImplementedException();
         }
 
-//        public async Task<User> GetCurrentUser(Claim user)
-//        {
-//           // return _userManager.FindByIdAsync(user);
-//        }
+        public async Task<User> GetCurrentUser(Claim user)
+        {
+            return await _userManager.FindByNameAsync(user.Value);
+        }
     }
 }

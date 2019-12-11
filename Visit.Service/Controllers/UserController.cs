@@ -75,12 +75,11 @@ namespace visitsvc.Controllers
 
         [Authorize(Policy = "ApiAccess")]
         [HttpGet("self")]
-        public async Task<ActionResult<Claim>> GetCurrentUser()
+        public async Task<ActionResult<User>> GetCurrentUser()
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier);
-            
-            
-            return user;
+
+            return await _userBusinessLogic.GetCurrentUser(user);
         }
         
         // POST api/auth/login
