@@ -9,7 +9,7 @@ namespace visitsvc.BusinessLogic
     public interface IUserBusinessLogic
     {
         Task<IActionResult> RegisterUser(RegistrationUserApi user);
-        Task<string> LoginUser(CredentialsViewModel credentials);
+        Task<JwtToken> LoginUser(CredentialsViewModel credentials);
         Task<User> GetCurrentUser(Claim user);
         Task<IEnumerable<User>> GetAllUsers();
 

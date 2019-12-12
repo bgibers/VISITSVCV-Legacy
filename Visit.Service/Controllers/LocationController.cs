@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using visitsvc.Models;
 namespace visitsvc.Controllers
 {
     [Route("Location")]
+    [EnableCors("CorsPolicy")]
     [ApiController]
     public class LocationController : ControllerBase
     {
@@ -38,6 +40,7 @@ namespace visitsvc.Controllers
         /// <summary>
         /// Get location by ID
         /// </summary>
+        [Authorize(Policy = "VisitUser")]
         [HttpGet("Code/{locationCode}")]
         public async Task<ActionResult<Location>> GetLocation(string locationCode)
         {
@@ -49,6 +52,7 @@ namespace visitsvc.Controllers
         /// <summary>
         /// Get location by Name
         /// </summary>
+        [Authorize(Policy = "VisitUser")]
         [HttpGet("Name/{name}")]
         public async Task<ActionResult<Location>> GetLocationByName(string name)
         {

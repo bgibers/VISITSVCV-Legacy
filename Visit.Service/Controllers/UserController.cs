@@ -4,18 +4,16 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using visitsvc.BusinessLogic;
-using visitsvc.DataAccess;
-using visitsvc.Helpers;
 using visitsvc.Models;
 
 namespace visitsvc.Controllers
 {
     [Route("User")]
+    [EnableCors("CorsPolicy")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -73,7 +71,7 @@ namespace visitsvc.Controllers
             return new OkObjectResult("User created");
         }
 
-        [Authorize(Policy = "ApiAccess")]
+        [Authorize(Policy = "VisitUser")]
         [HttpGet("self")]
         public async Task<ActionResult<User>> GetCurrentUser()
         {
@@ -84,21 +82,10 @@ namespace visitsvc.Controllers
         
         // POST api/auth/login
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUser([FromBody]CredentialsViewModel credentials)
+        public async Task<JwtToken> LoginUser([FromBody]CredentialsViewModel credentials)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var jwt = await _userBusinessLogic.LoginUser(credentials);
-
-            if (jwt == null)
-            {
-                return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
-            }
-            
-            return new OkObjectResult(jwt);
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return await _userBusinessLogic.LoginUser(credentials);
         }
 
 //        // DELETE: api/User/5

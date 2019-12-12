@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using visitsvc.DataAccess;
@@ -12,9 +11,10 @@ using visitsvc.Models;
 
 namespace visitsvc.Controllers
 {
+    [Authorize(Policy = "VisitUser")]
+    [EnableCors("CorsPolicy")]
     [Route("UserLocation")]
     [ApiController]
-    [Authorize(Policy = "ApiAccess")]
     public class UserLocationController : ControllerBase
     {
         private readonly VisitContext _context;

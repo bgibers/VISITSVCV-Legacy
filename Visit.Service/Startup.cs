@@ -25,6 +25,7 @@ namespace visitsvc
     public class Startup
     {
         private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         public Startup(IConfiguration configuration)
         {
@@ -37,7 +38,15 @@ namespace visitsvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .SetIsOriginAllowed((host) => true)
+                );
+            });
             services.AddTransient<ILocationBusinessLogic,LocationBusinessLogic>();
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
             services.AddDbContext<VisitContext>( 
@@ -123,7 +132,7 @@ namespace visitsvc
             // api user claim policy
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiAccess", policy => policy.RequireClaim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess));
+                options.AddPolicy("VisitUser", policy => policy.RequireClaim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess));
             });
             
             var builder = services.AddIdentityCore<User>(o =>
@@ -145,9 +154,7 @@ namespace visitsvc
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-            app.UseAuthorization();
-            app.UseAuthentication();
-            app.UseStaticFiles();
+
             app.UseOpenApi();
             app.UseSwaggerUi3();
             app.UseHttpsRedirection();
@@ -157,6 +164,11 @@ namespace visitsvc
                 c.RoutePrefix = string.Empty;
             });
             app.UseRouting();
+            app.UseCors("CorsPolicy");
+
+            app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
         }

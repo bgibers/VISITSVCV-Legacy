@@ -64,7 +64,7 @@ namespace visitsvc.BusinessLogic
             return await Task.FromResult<ClaimsIdentity>(null);
         }
 
-        public async Task<string> LoginUser(CredentialsViewModel credentials)
+        public async Task<JwtToken> LoginUser(CredentialsViewModel credentials)
         {
             var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
             
@@ -72,8 +72,19 @@ namespace visitsvc.BusinessLogic
             {
                 return null;
             }
+            
+            var token = JsonConvert.DeserializeObject<JwtToken>(await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, 
+                new JsonSerializerSettings { Formatting = Formatting.Indented }));
 
-            return await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+//            var user = await _userManager.FindByIdAsync(token.Id);
+//            
+//            var returnedUser =  new LoggedInUser()
+//            {
+//                user = user,
+//                token = token
+//            };
+
+            return token;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
