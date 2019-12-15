@@ -11,7 +11,7 @@ using visitsvc.Models;
 
 namespace visitsvc.Controllers
 {
-    [Authorize(Policy = "VisitUser")]
+//    [Authorize(Policy = "VisitUser")]
     [EnableCors("CorsPolicy")]
     [Route("UserLocation")]
     [ApiController]

@@ -50,11 +50,7 @@ namespace visitsvc
             services.AddTransient<ILocationBusinessLogic,LocationBusinessLogic>();
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
             services.AddDbContext<VisitContext>( 
-                options => options.UseMySql("Server=localhost; " +
-                                            "Port=1521; " +
-                                            "Database=visit; " +
-                                            "User=root; " +
-                                            "Password=clemson17;", 
+                options => options.UseMySql(Configuration.GetConnectionString("MySql"), 
                     mySqlOptions =>
                     {
                         mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql);// replace with your Server Version and Type

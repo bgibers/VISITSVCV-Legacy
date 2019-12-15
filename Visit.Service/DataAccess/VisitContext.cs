@@ -25,7 +25,7 @@ namespace visitsvc.DataAccess
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;port=1521;user=root;password=clemson17;database=visit");
+                optionsBuilder.UseMySql("server=visit-db.mysql.database.azure.com;port=3306;user=TeamVisit@visit-db;password=Clemson17;database=visit");
             }
         }
 
