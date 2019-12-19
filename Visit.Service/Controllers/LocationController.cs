@@ -40,7 +40,7 @@ namespace visitsvc.Controllers
         /// <summary>
         /// Get location by ID
         /// </summary>
-        [Authorize(Policy = "VisitUser")]
+        //[Authorize(Policy = "VisitUser")]
         [HttpGet("Code/{locationCode}")]
         public async Task<ActionResult<Location>> GetLocation(string locationCode)
         {
@@ -52,7 +52,7 @@ namespace visitsvc.Controllers
         /// <summary>
         /// Get location by Name
         /// </summary>
-        [Authorize(Policy = "VisitUser")]
+        //[Authorize(Policy = "VisitUser")]
         [HttpGet("Name/{name}")]
         public async Task<ActionResult<Location>> GetLocationByName(string name)
         {
@@ -64,7 +64,7 @@ namespace visitsvc.Controllers
         /// <summary>
         /// Get locations by Username
         /// </summary>
-        [Authorize(Policy = "VisitUser")]
+       // [Authorize(Policy = "VisitUser")]
         [HttpGet("Username/{name}")]
         public async Task<IEnumerable<UserLocation>> GetLocationsByUserName(string name)
         {

@@ -71,7 +71,7 @@ namespace visitsvc.Controllers
             return new OkObjectResult("User created");
         }
 
-        [Authorize(Policy = "VisitUser")]
+        //[Authorize(Policy = "VisitUser")]
         [HttpGet("self")]
         public async Task<ActionResult<User>> GetCurrentUser()
         {
