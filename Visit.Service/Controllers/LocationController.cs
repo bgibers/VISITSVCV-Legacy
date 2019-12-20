@@ -34,6 +34,7 @@ namespace visitsvc.Controllers
         public async Task<ActionResult> PostCountries()
         {
              await _LocationBusinessLogic.LoadCountries("test");
+             //todo add some verification to check if all locations were loaded 405??
              return Accepted();
         }
         
