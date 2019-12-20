@@ -65,10 +65,8 @@ namespace visitsvc.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _userBusinessLogic.RegisterUser(user);
+            return Ok(await _userBusinessLogic.RegisterUser(user));
             
-            //return CreatedAtAction("GetUser", new { id = user.Id }, user);
-            return new OkObjectResult("User created");
         }
 
         //[Authorize(Policy = "VisitUser")]
