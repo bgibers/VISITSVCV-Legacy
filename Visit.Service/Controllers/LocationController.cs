@@ -41,7 +41,7 @@ namespace visitsvc.Controllers
         /// <summary>
         /// Get location by ID
         /// </summary>
-        //[Authorize(Policy = "VisitUser")]
+        [Authorize(Policy = "VisitUser")]
         [HttpGet("Code/{locationCode}")]
         public async Task<ActionResult<Location>> GetLocation(string locationCode)
         {
