@@ -11,6 +11,11 @@ namespace visitsvc.Models.Mappings
             CreateMap<RegistrationUserApi, User>().ForMember(au => au.LName, map => map.MapFrom(vm => vm.LName));
             CreateMap<RegistrationUserApi, User>().ForMember(au => au.Email, map => map.MapFrom(vm => vm.Email));
             CreateMap<RegistrationUserApi, User>().ForMember(au => au.Birthday, map => map.MapFrom(vm => vm.Birthday));
+            CreateMap<RegistrationUserApi, User>().ForMember(au => au.BirthPlace, map => map.MapFrom(vm => vm.BirthPlace));
+            CreateMap<RegistrationUserApi, User>().ForMember(au => au.ResidesIn, map => map.MapFrom(vm => vm.ResidesIn));
+            CreateMap<RegistrationUserApi, User>().ForMember(au => au.Education, map => map.MapFrom(vm => vm.Education));
+            CreateMap<RegistrationUserApi, User>().ForMember(au => au.OccupationTitle, map => map.MapFrom(vm => vm.OccupationTitle));
         }
+
     }
 }

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using visitsvc.DataAccess;
 
 namespace visitsvc.Migrations
 {
     [DbContext(typeof(VisitContext))]
-    partial class VisitContextModelSnapshot : ModelSnapshot
+    [Migration("20191230211407_profileFields")]
+    partial class profileFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
