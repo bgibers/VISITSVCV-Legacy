@@ -66,14 +66,7 @@ namespace visitsvc.DataAccess
                 entity.Property(e => e.Birthday)
                     .HasColumnName("birthday")
                     .HasColumnType("date");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasColumnName("email")
-                    .HasColumnType("varchar(50)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
-
+                
                 entity.Property(e => e.FName)
                     .IsRequired()
                     .HasColumnName("fName")

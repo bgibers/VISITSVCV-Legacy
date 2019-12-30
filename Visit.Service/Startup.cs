@@ -133,6 +133,7 @@ namespace visitsvc
             
             var builder = services.AddIdentityCore<User>(o =>
             {
+                o.User.RequireUniqueEmail = true;
                 // configure identity options
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;

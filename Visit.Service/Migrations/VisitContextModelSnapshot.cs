@@ -2,17 +2,15 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using visitsvc.DataAccess;
 
 namespace visitsvc.Migrations
 {
     [DbContext(typeof(VisitContext))]
-    [Migration("20191210020426_UpdateLocationNameSize")]
-    partial class UpdateLocationNameSize
+    partial class VisitContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,12 +193,8 @@ namespace visitsvc.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnName("email")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(256)
-                        .HasAnnotation("MySql:CharSet", "utf8mb4")
-                        .HasAnnotation("MySql:Collation", "utf8mb4_0900_ai_ci");
+                        .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
@@ -251,9 +245,6 @@ namespace visitsvc.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Uname")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("UserName")
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")

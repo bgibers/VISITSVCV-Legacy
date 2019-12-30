@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace visitsvc.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,6 +29,7 @@ namespace visitsvc.Migrations
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
@@ -42,9 +43,7 @@ namespace visitsvc.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     fName = table.Column<string>(type: "varchar(50)", nullable: false),
                     lName = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Uname = table.Column<string>(nullable: true),
                     birthday = table.Column<DateTime>(type: "date", nullable: false),
-                    email = table.Column<string>(type: "varchar(50)", maxLength: 256, nullable: false),
                     avi = table.Column<byte[]>(type: "blob", nullable: true),
                     facebookId = table.Column<ulong>(type: "bigint(20) unsigned", nullable: true)
                 },
@@ -58,7 +57,7 @@ namespace visitsvc.Migrations
                 columns: table => new
                 {
                     LocationId = table.Column<string>(type: "varchar(6)", nullable: false),
-                    name = table.Column<string>(type: "varchar(30)", nullable: false),
+                    name = table.Column<string>(type: "varchar(50)", nullable: false),
                     filename = table.Column<string>(type: "varchar(30)", nullable: false)
                 },
                 constraints: table =>
