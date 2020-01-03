@@ -12,9 +12,11 @@ namespace visitsvc.Models
         }
         public string FName { get; set; }
         public string LName { get; set; }
-        public string Uname { get; set; }
         public DateTime Birthday { get; set; }
-        public string Email { get; set; }
+        public string BirthPlace { get; set; }
+        public string ResidesIn { get; set; }
+        public string Education { get; set; }
+        public string OccupationTitle { get; set; }
         public byte[] Avi { get; set; }
         public ulong? FacebookId { get; set; }
 

@@ -133,6 +133,7 @@ namespace visitsvc
             
             var builder = services.AddIdentityCore<User>(o =>
             {
+                o.User.RequireUniqueEmail = true;
                 // configure identity options
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
@@ -161,9 +162,8 @@ namespace visitsvc
             });
             app.UseRouting();
             app.UseCors("CorsPolicy");
-
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseStaticFiles();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             

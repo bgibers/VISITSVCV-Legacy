@@ -10,7 +10,7 @@ namespace visitsvc.BusinessLogic
     {
         Task<IActionResult> RegisterUser(RegistrationUserApi user);
         Task<JwtToken> LoginUser(CredentialsViewModel credentials);
-        Task<User> GetCurrentUser(Claim user);
+        Task<LoggedInUser> GetCurrentUser(Claim user);
         Task<IEnumerable<User>> GetAllUsers();
 
     }

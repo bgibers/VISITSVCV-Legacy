@@ -69,9 +69,9 @@ namespace visitsvc.Controllers
             
         }
 
-        //[Authorize(Policy = "VisitUser")]
+        [Authorize(Policy = "VisitUser")]
         [HttpGet("self")]
-        public async Task<ActionResult<User>> GetCurrentUser()
+        public async Task<LoggedInUser> GetCurrentUser()
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier);
 
