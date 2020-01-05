@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -48,9 +50,19 @@ namespace visitsvc.BusinessLogic
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 return await Task.FromResult<ClaimsIdentity>(null);
-
+            
             // get the user to verifty
-            var userToVerify = await _userManager.FindByNameAsync(userName);
+            var userToVerify = new User();
+            if (userName.Contains('@'))
+            {
+                //need to fix this
+                IsEmailValid(userName);
+                userToVerify = await _userManager.FindByEmailAsync(userName);
+            }
+            else
+            {
+                userToVerify = await _userManager.FindByNameAsync(userName);
+            }
 
             if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
 
@@ -64,6 +76,18 @@ namespace visitsvc.BusinessLogic
             return await Task.FromResult<ClaimsIdentity>(null);
         }
 
+        private bool IsEmailValid(string mail)
+        {
+            try
+            {                
+                MailAddress eMailAddress = new MailAddress(mail);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;  
+            }
+        }
         public async Task<JwtToken> LoginUser(CredentialsViewModel credentials)
         {
             var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
