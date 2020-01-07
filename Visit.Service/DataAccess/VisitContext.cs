@@ -61,7 +61,7 @@ namespace visitsvc.DataAccess
 
                 entity.Property(e => e.Avi)
                     .HasColumnName("avi")
-                    .HasColumnType("blob");
+                    .HasColumnType("longtext");
 
                 entity.Property(e => e.Birthday)
                     .HasColumnName("birthday")

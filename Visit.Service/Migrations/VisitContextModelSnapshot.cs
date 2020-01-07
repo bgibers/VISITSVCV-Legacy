@@ -180,9 +180,9 @@ namespace visitsvc.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Avi")
+                    b.Property<string>("Avi")
                         .HasColumnName("avi")
-                        .HasColumnType("blob");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("BirthPlace")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

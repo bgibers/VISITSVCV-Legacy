@@ -9,8 +9,8 @@ using visitsvc.DataAccess;
 namespace visitsvc.Migrations
 {
     [DbContext(typeof(VisitContext))]
-    [Migration("20191230205620_Initial")]
-    partial class Initial
+    [Migration("20200107001502_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,9 +182,12 @@ namespace visitsvc.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Avi")
+                    b.Property<string>("Avi")
                         .HasColumnName("avi")
-                        .HasColumnType("blob");
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("BirthPlace")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnName("birthday")
@@ -192,6 +195,9 @@ namespace visitsvc.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Education")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Email")
@@ -233,6 +239,9 @@ namespace visitsvc.Migrations
                         .HasColumnType("varchar(256) CHARACTER SET utf8mb4")
                         .HasMaxLength(256);
 
+                    b.Property<string>("OccupationTitle")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -241,6 +250,9 @@ namespace visitsvc.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ResidesIn")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
