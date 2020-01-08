@@ -69,7 +69,7 @@ namespace visitsvc.BusinessLogic
             // check the credentials
             if (await _userManager.CheckPasswordAsync(userToVerify, password))
             {
-                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userName, userToVerify.Id));
+                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userToVerify.UserName, userToVerify.Id));
             }
 
             // Credentials are invalid, or account doesn't exist
@@ -97,7 +97,7 @@ namespace visitsvc.BusinessLogic
                 return null;
             }
             
-            var token = JsonConvert.DeserializeObject<JwtToken>(await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, 
+            var token = JsonConvert.DeserializeObject<JwtToken>(await Tokens.GenerateJwt(identity, _jwtFactory, identity.Name, _jwtOptions, 
                 new JsonSerializerSettings { Formatting = Formatting.Indented }));
 
 //            var user = await _userManager.FindByIdAsync(token.Id);
