@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using visitsvc.DataAccess;
 using visitsvc.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Microsoft.WindowsAzure.Storage;
 using Newtonsoft.Json;
 using visitsvc.Auth;
 using visitsvc.Helpers;
@@ -20,17 +22,20 @@ namespace visitsvc.BusinessLogic
         
         private readonly VisitContext _visitContext;
         private readonly UserManager<User> _userManager;
+        private readonly IBlobStorageBusinessLogic _blobStorageBusinessLogic;
         private readonly IMapper _mapper;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
         
-        public UserBusinessLogic(VisitContext visitContext, UserManager<User> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions>  jwtOptions, IMapper mapper)
+        public UserBusinessLogic(VisitContext visitContext, UserManager<User> userManager, IJwtFactory jwtFactory,
+            IOptions<JwtIssuerOptions>  jwtOptions, IMapper mapper, IBlobStorageBusinessLogic blobStorageBusinessLogic)
         {
             _visitContext = visitContext;
             _userManager = userManager;
             _mapper = mapper;
             _jwtFactory = jwtFactory;
             _jwtOptions = jwtOptions.Value;
+            _blobStorageBusinessLogic = blobStorageBusinessLogic;
         }
 
         public async Task<IActionResult> RegisterUser(RegistrationUserApi model)
@@ -111,6 +116,20 @@ namespace visitsvc.BusinessLogic
             return token;
         }
 
+        public async Task<IdentityResult> UploadProfileImage(IFormFile image, Claim user)
+        {
+            var currentUser = await _userManager.FindByNameAsync(user.Value);
+
+            if (!await _blobStorageBusinessLogic.UploadFile(currentUser.Id, image))
+            {
+               throw new StorageException("User " + currentUser.UserName + " Avi not updated");
+            }
+
+            // The avi is currently set to the userId
+            currentUser.Avi = currentUser.Id;
+            return await _userManager.UpdateAsync(currentUser);
+        }
+
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             throw new System.NotImplementedException();
@@ -118,8 +137,11 @@ namespace visitsvc.BusinessLogic
 
         public async Task<LoggedInUser> GetCurrentUser(Claim user)
         {
-            var currentUser = await _userManager.FindByNameAsync(user.Value);
-            return _mapper.Map<LoggedInUser>(currentUser);
+            var result = await _userManager.FindByNameAsync(user.Value);
+            
+            var currentUser = _mapper.Map<LoggedInUser>(result);
+            currentUser.Avi = await _blobStorageBusinessLogic.GetFileByName(result.Id);
+            return currentUser;
         }
     }
 }

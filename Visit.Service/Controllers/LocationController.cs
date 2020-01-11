@@ -18,11 +18,11 @@ namespace visitsvc.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly ILocationBusinessLogic _LocationBusinessLogic;
+        private readonly ILocationBusinessLogic _locationBusinessLogic;
 
-        public LocationController(ILocationBusinessLogic LocationBusinessLogic)
+        public LocationController(ILocationBusinessLogic locationBusinessLogic)
         {
-            _LocationBusinessLogic = LocationBusinessLogic;
+            _locationBusinessLogic = locationBusinessLogic;
         }
         
         // POST: Location/load
@@ -33,7 +33,7 @@ namespace visitsvc.Controllers
         [HttpPost]
         public async Task<ActionResult> PostCountries()
         {
-             await _LocationBusinessLogic.LoadCountries("test");
+             await _locationBusinessLogic.LoadCountries("test");
              //todo add some verification to check if all locations were loaded 405??
              return Accepted();
         }
@@ -45,7 +45,7 @@ namespace visitsvc.Controllers
         [HttpGet("Code/{locationCode}")]
         public async Task<ActionResult<Location>> GetLocation(string locationCode)
         {
-            var result = await _LocationBusinessLogic.GetLocationById(locationCode);
+            var result = await _locationBusinessLogic.GetLocationById(locationCode);
 
             return result.Value == null ? NotFound() : result;
         }
@@ -57,7 +57,7 @@ namespace visitsvc.Controllers
         [HttpGet("Name/{name}")]
         public async Task<ActionResult<Location>> GetLocationByName(string name)
         {
-            var result = await _LocationBusinessLogic.GetLocationByName(name);
+            var result = await _locationBusinessLogic.GetLocationByName(name);
 
             return result.Value == null ? NotFound() : result;
         }
@@ -68,7 +68,7 @@ namespace visitsvc.Controllers
         [HttpGet("Username/{name}")]
         public async Task<IEnumerable<UserLocation>> GetLocationsByUserName(string name)
         {
-            var result = await _LocationBusinessLogic.GetAllLocationsByUsername(name).ToListAsync();
+            var result = await _locationBusinessLogic.GetAllLocationsByUsername(name).ToListAsync();
 
             return result;
         }
@@ -81,7 +81,7 @@ namespace visitsvc.Controllers
         [HttpGet("User/{id}")]
         public async Task<IEnumerable<UserLocation>> GetLocationsByUserId(string id)
         {
-            var result = await _LocationBusinessLogic.GetAllLocationsByUserId(id).ToListAsync();
+            var result = await _locationBusinessLogic.GetAllLocationsByUserId(id).ToListAsync();
 
             return result;
         }

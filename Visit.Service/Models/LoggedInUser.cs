@@ -7,6 +7,7 @@ namespace visitsvc.Models
         public string FName { get; set; }
         public string LName { get; set; }
         public string UserName { get; set; }
+        public string Avi { get; set; }
         public string BirthPlace { get; set; }
         public string ResidesIn { get; set; }
         public string Education { get; set; }

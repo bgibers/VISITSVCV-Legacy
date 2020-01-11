@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using visitsvc.BusinessLogic;
 using visitsvc.Models;
@@ -78,9 +79,25 @@ namespace visitsvc.Controllers
             return await _userBusinessLogic.GetCurrentUser(user);
         }
         
+        [Authorize(Policy = "VisitUser")]
+        [HttpPost("update/profileimage")]
+        public async Task<IdentityResult> UpdateProfileImage(IFormFile image)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            return await _userBusinessLogic.UploadProfileImage(image,user);
+        }
+        
         // POST api/auth/login
         [HttpPost("login")]
         public async Task<JwtToken> LoginUser([FromBody]CredentialsViewModel credentials)
+        {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return await _userBusinessLogic.LoginUser(credentials);
+        }
+        
+        [HttpPost("list")]
+        public async Task<JwtToken> ListTest([FromBody]CredentialsViewModel credentials)
         {
             Response.Headers.Add("Access-Control-Allow-Origin", "*");
             return await _userBusinessLogic.LoginUser(credentials);

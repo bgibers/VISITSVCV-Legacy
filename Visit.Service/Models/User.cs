@@ -17,7 +17,7 @@ namespace visitsvc.Models
         public string ResidesIn { get; set; }
         public string Education { get; set; }
         public string OccupationTitle { get; set; }
-        public byte[] Avi { get; set; }
+        public string Avi { get; set; }
         public ulong? FacebookId { get; set; }
 
         public ICollection<UserLocation>? UserLocation { get; set; }

@@ -19,13 +19,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.IdentityModel.Tokens;
 using visitsvc.Auth;
+using visitsvc.Models.ConfigModels;
 
 namespace visitsvc
 {
     public class Startup
     {
         private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         public Startup(IConfiguration configuration)
         {
@@ -48,6 +49,7 @@ namespace visitsvc
                 );
             });
             services.AddTransient<ILocationBusinessLogic,LocationBusinessLogic>();
+            services.AddTransient<IBlobStorageBusinessLogic, BlobStorageBusinessLogic>();
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
             services.AddDbContext<VisitContext>( 
                 options => options.UseMySql(Configuration.GetConnectionString("MySql"), 
@@ -145,6 +147,8 @@ namespace visitsvc
             builder.AddEntityFrameworkStores<VisitContext>().AddDefaultTokenProviders();
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.Configure<BlobConfig>(Configuration.GetSection("BlobStorageAcct"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
