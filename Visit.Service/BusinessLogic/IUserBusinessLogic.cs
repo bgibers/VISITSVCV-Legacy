@@ -14,6 +14,7 @@ namespace visitsvc.BusinessLogic
         Task<JwtToken> LoginUser(CredentialsViewModel credentials);
         Task<LoggedInUser> GetCurrentUser(Claim user);
         Task<IdentityResult> UploadProfileImage(IFormFile image, Claim user);
+        Task<bool> UserNameEmailTaken(string login);
         Task<IEnumerable<User>> GetAllUsers();
 
     }

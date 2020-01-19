@@ -92,25 +92,31 @@ namespace visitsvc.BusinessLogic
 
         public async Task<string> GetFileByName(string fileName)
         {
-            MemoryStream ms = new MemoryStream();
-            if (CloudStorageAccount.TryParse(_config.Value.StorageConnection, out CloudStorageAccount storageAccount))
+            try
             {
-                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-                CloudBlobContainer container = blobClient.GetContainerReference(_config.Value.Container);
-                if (await container.ExistsAsync())
+                MemoryStream ms = new MemoryStream();
+                if (CloudStorageAccount.TryParse(_config.Value.StorageConnection,
+                    out CloudStorageAccount storageAccount))
                 {
-                    CloudBlob file = container.GetBlobReference(fileName);
-                    await file.FetchAttributesAsync();
-                    byte[] arr = new byte[file.Properties.Length];
-                    await file.DownloadToByteArrayAsync(arr, 0);
-                    var fileBase64 = Convert.ToBase64String(arr);
-                    return fileBase64;
+                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                    CloudBlobContainer container = blobClient.GetContainerReference(_config.Value.Container);
+                    if (await container.ExistsAsync())
+                    {
+                        CloudBlob file = container.GetBlobReference(fileName);
+                        await file.FetchAttributesAsync();
+                        byte[] arr = new byte[file.Properties.Length];
+                        await file.DownloadToByteArrayAsync(arr, 0);
+                        var fileBase64 = Convert.ToBase64String(arr);
+                        return fileBase64;
+                    }
+
+                    throw new StorageException("Container does not exist");
                 }
-
-                throw new StorageException("Container does not exist");
             }
-
-            throw new FileNotFoundException(nameof(fileName));
+            catch (Exception)
+            {
+            }
+            return null;
         }
         
         public async Task<bool> DeleteFile(string fileName)

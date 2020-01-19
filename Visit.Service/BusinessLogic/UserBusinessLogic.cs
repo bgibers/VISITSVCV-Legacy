@@ -81,6 +81,25 @@ namespace visitsvc.BusinessLogic
             return await Task.FromResult<ClaimsIdentity>(null);
         }
 
+        public async Task<bool> UserNameEmailTaken(string login)
+        {
+            if (login.Contains('@'))
+            {
+                //need to fix this
+                IsEmailValid(login);
+                var result = await _userManager.FindByEmailAsync(login);
+
+                if (result != null) return true;
+            }
+            else
+            {
+                var result = await _userManager.FindByNameAsync(login);
+                if (result != null) return true;
+            }
+
+            return false;
+        }
+
         private bool IsEmailValid(string mail)
         {
             try

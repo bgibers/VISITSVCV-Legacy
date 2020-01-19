@@ -67,7 +67,12 @@ namespace visitsvc.Controllers
             }
 
             return Ok(await _userBusinessLogic.RegisterUser(user));
-            
+        }
+
+        [HttpGet("exists")]
+        public async Task<bool> DoesUserExist(string login)
+        {
+            return await _userBusinessLogic.UserNameEmailTaken(login);
         }
 
         [Authorize(Policy = "VisitUser")]
@@ -96,13 +101,7 @@ namespace visitsvc.Controllers
             return await _userBusinessLogic.LoginUser(credentials);
         }
         
-        [HttpPost("list")]
-        public async Task<JwtToken> ListTest([FromBody]CredentialsViewModel credentials)
-        {
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            return await _userBusinessLogic.LoginUser(credentials);
-        }
-
+        
 //        // DELETE: api/User/5
 //        [HttpDelete("{id}")]
 //        public async Task<ActionResult<User>> DeleteUser(int id)
