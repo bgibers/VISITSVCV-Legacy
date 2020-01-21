@@ -92,7 +92,7 @@ namespace visitsvc.Controllers
 
             return await _userBusinessLogic.UploadProfileImage(image,user);
         }
-        
+
         // POST api/auth/login
         [HttpPost("login")]
         public async Task<JwtToken> LoginUser([FromBody]CredentialsViewModel credentials)

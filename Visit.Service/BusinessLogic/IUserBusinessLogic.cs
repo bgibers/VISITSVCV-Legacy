@@ -16,6 +16,5 @@ namespace visitsvc.BusinessLogic
         Task<IdentityResult> UploadProfileImage(IFormFile image, Claim user);
         Task<bool> UserNameEmailTaken(string login);
         Task<IEnumerable<User>> GetAllUsers();
-
     }
 }

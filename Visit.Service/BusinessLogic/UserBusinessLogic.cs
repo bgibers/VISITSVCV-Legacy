@@ -23,18 +23,21 @@ namespace visitsvc.BusinessLogic
         private readonly VisitContext _visitContext;
         private readonly UserManager<User> _userManager;
         private readonly IBlobStorageBusinessLogic _blobStorageBusinessLogic;
+        private readonly ILocationBusinessLogic _locationBusinessLogic;
         private readonly IMapper _mapper;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
         
         public UserBusinessLogic(VisitContext visitContext, UserManager<User> userManager, IJwtFactory jwtFactory,
-            IOptions<JwtIssuerOptions>  jwtOptions, IMapper mapper, IBlobStorageBusinessLogic blobStorageBusinessLogic)
+            IOptions<JwtIssuerOptions>  jwtOptions, IMapper mapper, ILocationBusinessLogic locationBusinessLogic,
+            IBlobStorageBusinessLogic blobStorageBusinessLogic)
         {
             _visitContext = visitContext;
             _userManager = userManager;
             _mapper = mapper;
             _jwtFactory = jwtFactory;
             _jwtOptions = jwtOptions.Value;
+            _locationBusinessLogic = locationBusinessLogic;
             _blobStorageBusinessLogic = blobStorageBusinessLogic;
         }
 
@@ -158,9 +161,42 @@ namespace visitsvc.BusinessLogic
         {
             var result = await _userManager.FindByNameAsync(user.Value);
             
-            var currentUser = _mapper.Map<LoggedInUser>(result);
+            //var currentUser = _mapper.Map<LoggedInUser>(result);
+
+            var currentUser = new LoggedInUser()
+            {
+                Email = result.Email,
+                FName = result.FName,
+                LName = result.LName,
+                UserName = result.UserName,
+                Birthday = result.Birthday,
+                Education = result.Education,
+                BirthPlace = new LocationImage(),
+                ResidesIn = new LocationImage(),
+                OccupationTitle = result.OccupationTitle
+            };
+            
+            var birthplace = await _locationBusinessLogic.GetLocationByName(result.BirthPlace);
+            currentUser.BirthPlace = new LocationImage
+            {
+                Name = birthplace.Name,
+                Image = await GetUserLocationFlag(birthplace.Filename)
+            };
+            
+            var residence = await _locationBusinessLogic.GetLocationByName(result.BirthPlace);
+            currentUser.ResidesIn = new LocationImage
+            {
+                Name = residence.Name,
+                Image = await GetUserLocationFlag(residence.Filename)
+            };
+            
             currentUser.Avi = await _blobStorageBusinessLogic.GetFileByName(result.Id);
             return currentUser;
+        }
+
+        public async Task<string> GetUserLocationFlag(string locationId)
+        {
+            return await _blobStorageBusinessLogic.GetFileByName(locationId + ".jpg");
         }
     }
 }

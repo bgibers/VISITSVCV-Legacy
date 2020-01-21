@@ -36,7 +36,7 @@ namespace visitsvc.BusinessLogic
                     Location location = new Location()
                     {
                         LocationId = obj.Id,
-                        Filename = ".json",
+                        Filename = obj.Id + ".jpg",
                         Name = obj.Name
                     };
                     await _context.Location.AddAsync(location);
@@ -46,14 +46,14 @@ namespace visitsvc.BusinessLogic
             return new AcceptedResult();
         }
 
-        public async Task<ActionResult<Location>> GetLocationById(string locationId)
+        public async Task<Location> GetLocationById(string locationId)
         {
             var location = await _context.Location.FindAsync(locationId);
             
             return location;
         }
 
-        public async Task<ActionResult<Location>> GetLocationByName(string locationName)
+        public async Task<Location> GetLocationByName(string locationName)
         {
             var location = await _context.Location.FirstAsync( l => l.Name == locationName);
             return location;

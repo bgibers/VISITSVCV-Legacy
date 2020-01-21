@@ -45,9 +45,7 @@ namespace visitsvc.Controllers
         [HttpGet("Code/{locationCode}")]
         public async Task<ActionResult<Location>> GetLocation(string locationCode)
         {
-            var result = await _locationBusinessLogic.GetLocationById(locationCode);
-
-            return result.Value == null ? NotFound() : result;
+            return Ok(await _locationBusinessLogic.GetLocationById(locationCode));
         }
 
         /// <summary>
@@ -57,9 +55,7 @@ namespace visitsvc.Controllers
         [HttpGet("Name/{name}")]
         public async Task<ActionResult<Location>> GetLocationByName(string name)
         {
-            var result = await _locationBusinessLogic.GetLocationByName(name);
-
-            return result.Value == null ? NotFound() : result;
+            return Ok(await _locationBusinessLogic.GetLocationByName(name));
         }
         
         /// <summary>
