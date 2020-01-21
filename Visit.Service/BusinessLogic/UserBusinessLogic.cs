@@ -194,9 +194,9 @@ namespace visitsvc.BusinessLogic
             return currentUser;
         }
 
-        public async Task<string> GetUserLocationFlag(string locationId)
+        public async Task<string> GetUserLocationFlag(string filename)
         {
-            return await _blobStorageBusinessLogic.GetFileByName(locationId + ".jpg");
+            return await _blobStorageBusinessLogic.GetFileByName(filename);
         }
     }
 }
