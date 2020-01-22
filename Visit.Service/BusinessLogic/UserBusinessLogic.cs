@@ -183,7 +183,7 @@ namespace visitsvc.BusinessLogic
                 Image = await GetUserLocationFlag(birthplace.Filename)
             };
             
-            var residence = await _locationBusinessLogic.GetLocationByName(result.BirthPlace);
+            var residence = await _locationBusinessLogic.GetLocationByName(result.ResidesIn);
             currentUser.ResidesIn = new LocationImage
             {
                 Name = residence.Name,
