@@ -81,12 +81,14 @@ namespace visitsvc.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<UserLocation>> PostUserLocation(UserLocation userLocation)
+        public async Task<ActionResult<UserLocation>> PostUserLocation(List<UserLocation> userLocationList)
         {
-            _context.UserLocation.Add(userLocation);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUserLocation", new { id = userLocation.Id }, userLocation);
+            foreach (var location in userLocationList)
+            {
+                _context.UserLocation.Add(location);
+            }
+            
+            return Ok(await _context.SaveChangesAsync());
         }
 
         // DELETE: api/UserLocation/5
