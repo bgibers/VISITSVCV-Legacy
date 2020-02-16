@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using visitsvc.DataAccess;
 using visitsvc.Models;
 
@@ -18,9 +19,10 @@ namespace visitsvc.Controllers
     public class UserLocationController : ControllerBase
     {
         private readonly VisitContext _context;
-
-        public UserLocationController(VisitContext context)
+        private readonly ILogger _logger;
+        public UserLocationController(VisitContext context, ILogger<UserController> logger)
         {
+            _logger = logger;
             _context = context;
         }
 
@@ -87,7 +89,7 @@ namespace visitsvc.Controllers
             {
                 _context.UserLocation.Add(location);
             }
-            
+            _logger.LogInformation("Should be saving locations");
             return Ok(await _context.SaveChangesAsync());
         }
 
